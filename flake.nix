@@ -9,7 +9,6 @@
   {
     homeConfigurations = {
       home = {
-        inherit system;
         imports = [ ./home.nix ];
       };
     };
