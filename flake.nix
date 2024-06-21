@@ -10,7 +10,7 @@
     flake-utils.lib.eachDefaultSystem (system:
       {
         homeConfigurations = {
-          vsiles-home = {
+          home = {
             inherit system;
             imports = [ ./home.nix ];
           };
