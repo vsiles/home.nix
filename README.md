@@ -1,6 +1,7 @@
-# home.nix
+# How to set your default shell
 
-Programs and Configurations for my Home-Manager/Nix config
-
-This is tested only with home-manager / nix-darwin for now.
-It might need tweaks to work with linux/WSL
+- Use `which` to find the full path of your favorite shell
+- Add it to `/etc/shells` (**requires sudo**)
+- Run `chsh -s <full path to your shell>`
+- Log-out / Log-in
+- Profit
