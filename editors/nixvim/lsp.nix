@@ -1,5 +1,4 @@
 # https://github.com/jemaw/nixvim-config/blob/main/config/plugins/lsp.nix
-# https://gitlab.helsing-dev.ai/omar.essaid/nixified-dotfiles/-/blob/helsing/home/editors/nixvim/lsp.nix?ref_type=heads
 { config, pkgs, ... }:
 {
   programs.nixvim = {

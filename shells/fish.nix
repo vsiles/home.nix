@@ -75,19 +75,6 @@
         '';
         description = "setup some python/slap state";
       };
-      # aws alias
-      aws-login = {
-        body = "${pkgs.awscli2}/bin/aws sso login --sso-session helsing";
-      };
-      aws-dev = {
-        body = "${pkgs.awscli2}/bin/aws eks update-kubeconfig --name spine-dev --region eu-west-1 --profile spine-dev";
-      };
-      aws-stage = {
-        body = "${pkgs.awscli2}/bin/aws eks update-kubeconfig --name spine-stage --region eu-west-1 --profile spine-stage";
-      };
-      aws-prod = {
-        body = "${pkgs.awscli2}/bin/aws eks update-kubeconfig --name spine-prod --region eu-west-1 --profile spine-prod";
-      };
       # file explorer
       yy = {
         body = ''
