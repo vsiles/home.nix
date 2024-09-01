@@ -1,7 +1,4 @@
 { config, pkgs, actualName, username, email, ... }:
-let
-  hs-nix = pkgs.writeShellScriptBin "hs-nix" (builtins.readFile ./hs-nix.sh);
-in
 {
   imports = [
     ./terminals

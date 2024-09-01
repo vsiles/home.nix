@@ -59,7 +59,7 @@ config.keys = {
     { key = 's', mods = 'LEADER',          action = act.ShowLauncher },
     { key = 'P', mods = 'LEADER|SHIFT',    action = act.ActivateCommandPalette },
     -- TODO create a local detachable domain
-    { key = "d", mods = "LEADER",          action = act.DetachDomain "CurrentPaneDomain"}, 
+    { key = "d", mods = "LEADER",          action = act.DetachDomain "CurrentPaneDomain"},
     -- { key = "&", mods = "LEADER|SHIFT", action=act{CloseCurrentTab={confirm=true}}},
     { key = 'x', mods = 'LEADER|CTRL',     action = act.SplitHorizontal { domain = "CurrentPaneDomain" }},
     { key = 'v', mods = 'LEADER|CTRL',     action = act.SplitVertical { domain = "CurrentPaneDomain" }},
@@ -167,7 +167,7 @@ config.hyperlink_rules = {
         format = "https://fburl.com/b/$1",
     },
 }
-  
+
 -- See: https://wezfurlong.org/wezterm/quickselect.html
 config.quick_select_patterns = {
     -- Make task, diff and paste numbers quick-selectable
