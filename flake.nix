@@ -1,5 +1,6 @@
 {
   description = "vsiles' Nix configuration flake";
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
