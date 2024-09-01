@@ -44,29 +44,18 @@
             ./system.nix
             home-manager.darwinModules.home-manager
             {
-              # Ignore these properties, plz!
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = false;
 
-              # nix supports variable interpolation with the ${} syntax in strings and sometimes elsewhere!
               home-manager.users.${username} = {
                 imports = [ ./home.nix ];
               };
 
-              # nix allows nested properties to be set in two ways - in an object style and a path style. The path style can
-              # be seen with home-manager.users.${username} on the lines above. The object style
-              # on the line below. A hybrid of the two usually makes sense!
               nixpkgs = {
-                # an overlay is a function which adjusts the set of nixpkgs dependencies, either by
-                # changing or adding more. Here, helpkgs could be adding some new dependencies,
-                # or overwriting them (e.g. changing default Python to use a different optimisation level).
                 overlays = [];
                 config.allowUnfree = allowUnfree;
               };
 
-              # inherit means that a variable is directly copied from a parent variable.
-              # this attribute means that when home-manager calls our 'home.nix' file, it will pass these
-              # arguments so that we can reference them.
               home-manager.extraSpecialArgs = mac-specialArgs;
             }
           ];
@@ -93,10 +82,6 @@
       darwinConfigurations = { inherit mac; };
       homeConfigurations = { inherit linux; };
 
-      # by building this in checks, we will have a CI flow that works nicely.
-      # here, the aarch64-darwin means that this will only be built on that architecture.
-      # there is a library called 'flake-utils' which lets one define the same derivation
-      # for every architecture. Here, our derivation is mac-dependent, so it doesn't really matter.
       checks.aarch64-darwin = { canBuild = mac.system; };
       checks.x86_64-linux = { canBuild = linux.activationPackage; };
 
