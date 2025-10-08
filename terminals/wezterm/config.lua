@@ -32,6 +32,10 @@ end
 config.font_size = 18.0
 -- config.font_antialias = "Subpixel", -- None, Greyscale, Subpixel
 -- config.font_hinting = "Full",  -- None, Vertical, VerticalSubpixel, Full
+-- WORKAROUND FOR BROKEN FONTS
+-- https://github.com/wez/wezterm/issues/5990
+config.front_end = "WebGpu"
+-- enable_wayland = false
 
 -- theme & look
 config.color_scheme = 'Default Dark (base16)'

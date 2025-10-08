@@ -1,4 +1,5 @@
 # https://github.com/jemaw/nixvim-config/blob/main/config/plugins/lsp.nix
+# https://gitlab.helsing-dev.ai/omar.essaid/nixified-dotfiles/-/blob/helsing/home/editors/nixvim/lsp.nix?ref_type=heads
 { config, pkgs, ... }:
 {
   programs.nixvim = {
@@ -68,20 +69,20 @@
               };
             };
           };
-          nil-ls = {
+          nil_ls = {
             enable = true;
             settings.formatting.command = [ "nixpkgs-fmt" ];
           };
-          lua-ls = {
+          lua_ls = {
             enable = true;
             settings.completion.callSnippet = "Replace";
           };
-          rust-analyzer = {
+          rust_analyzer = {
             enable = false;
             installRustc = false;
             installCargo = false;
           };
-          tsserver.enable = false;
+          ts_ls.enable = false;
         };
       };
       lspkind.enable = true;
@@ -89,6 +90,9 @@
         enable = true;
         settings = {
           server = {
+            # TODO: check this, stolen from Adam. Should fix the strange occurrences where
+            # it crashses with `cant find -lSystem` and the like
+            cmd = [ "direnv" "exec" "." "rust-analyzer" ];
             default_settings = {
               rust-analyzer = {
                 cargo = {
@@ -109,18 +113,8 @@
         };
       };
       fidget.enable = true;
-      trouble = {
-        enable = true;
-        settings = {
-          signs = {
-            error = "";
-            warning = "";
-            hint = "";
-            information = "";
-            other = "";
-          };
-        };
-      };
+      trouble.enable = true;
+      web-devicons.enable = true;
     };
     extraConfigLuaPost =
       # lua

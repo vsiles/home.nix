@@ -11,7 +11,8 @@ let
 in
 {
   imports = [
-    nixvim.homeManagerModules.nixvim
+    # nixvim.homeManagerModules.nixvim
+    nixvim.homeModules.nixvim
     ./lsp.nix
     ./completion.nix
   ];
@@ -87,10 +88,11 @@ in
       airline = {
         enable = true;
         settings = {
-          powerline_fonts = true;
+          powerline_fonts = 1;
         };
       };
       oil.enable = true;
+      # TODO(vsiles) test if/when I can re-enable these
       treesitter = {
         enable = true;
         settings = {

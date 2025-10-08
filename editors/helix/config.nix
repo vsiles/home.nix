@@ -44,6 +44,8 @@
       tab = "all";
       newline = "none";
     };
+    trim-final-newlines = true;
+    trim-trailing-whitespace = true;
 
     # === Indent guides ===
     indent-guides = {

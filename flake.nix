@@ -2,15 +2,16 @@
   description = "vsiles' Nix configuration flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    darwin = {
-      url = "github:lnl7/nix-darwin";
+    nix-darwin = {
+      url = "github:lnl7/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -21,7 +22,8 @@
   };
   outputs =
     { nixpkgs
-    , darwin
+    , unstable
+    , nix-darwin
     , home-manager
     , nixvim
     , ...
@@ -33,12 +35,22 @@
       allowUnfree = true; # allow unfree packages to be installed
 
       specialArgs = { inherit username actualName email nixvim; };
+        inherit
+          username
+          actualName
+          email
+          nixvim
+          ;
+      };
 
       mac =
         let
-          mac-specialArgs = specialArgs // { home = "/Users/${username}"; };
+          mac-specialArgs = specialArgs // {
+            home = "/Users/${username}";
+            unstablePkgs = import unstable { system = "aarch64-darwin"; };
+          };
         in
-        darwin.lib.darwinSystem {
+        nix-darwin.lib.darwinSystem {
           specialArgs = mac-specialArgs;
           modules = [
             ./system.nix
@@ -82,8 +94,12 @@
       darwinConfigurations = { inherit mac; };
       homeConfigurations = { inherit linux; };
 
-      checks.aarch64-darwin = { canBuild = mac.system; };
-      checks.x86_64-linux = { canBuild = linux.activationPackage; };
+      checks.aarch64-darwin = {
+        canBuild = mac.system;
+      };
+      checks.x86_64-linux = {
+        canBuild = linux.activationPackage;
+      };
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
       formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixpkgs-fmt;

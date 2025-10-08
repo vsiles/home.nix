@@ -4,7 +4,7 @@
     enableFishIntegration = true;
     settings = {
       log = { enabled = false; };
-      manager = {
+      mgr = {
         show_hidden = true;
         show_symlink = true;
         sort_by = "alphabetical";
@@ -31,4 +31,3 @@
       ueberzugpp
     ];
 }
-

@@ -7,24 +7,28 @@ let
   funcs = import ../functions.nix { inherit config lib pkgs; };
   nixPkgs = with pkgs; [
     nixpkgs-fmt
+    nixfmt-rfc-style
+    any-nix-shell
+  ];
   ];
   # The ones I can't live without
   mandatoryPkgs = with pkgs; [
+    coreutils
     curl
     jq
     fd
     ripgrep
     tree
+    wget
   ];
   # The "k8s" ones"
   k8sPkgs = with pkgs; [
     awscli2
-    grpcurl
+    # grpcurl
     kubernetes-helm
     k9s
     openshift
-    terraform
-    wget
+    # terraform
   ];
   miscPkgs = with pkgs; [
     # TODO(vsiles) bugged at the moment, see
@@ -33,19 +37,11 @@ let
     bat
     delta
     difftastic
-    fluxcd
     git-lfs
-    graphviz
-    hexedit
-    irssi
-    jujutsu
-    # lazygit
-    gitui
+    # irssi
+    # jujutsu # from unstable, see jujutsu.nix
+    # gitui
     marksman
-    postgresql
-    protobuf
-    sqlite
-    sqlite.out
     topgrade
   ];
   nvimPkgs = with pkgs; [
@@ -53,13 +49,15 @@ let
     lua-language-server
     nil
     nixd
-    terraform-ls
+    taplo
+    # terraform-ls
     tree-sitter
   ];
   rustPkgs = with pkgs; [
     # Rust stuff
     cargo-update
     cargo-nextest
+    cargo-machete
     rustup
   ];
   pythonPkgs = with pkgs; [
@@ -74,7 +72,6 @@ in
     ./fzf.nix
     ./git.nix
     ./jujutsu.nix
-    # ./pyenv.nix
     ./topgrade.nix
     ./tmux.nix
     ./yazi.nix

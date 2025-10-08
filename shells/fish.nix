@@ -15,46 +15,38 @@
         name = "fzf";
         src = pkgs.fishPlugins.fzf.src;
       }
-      # TODO: add back ivakyb/fish_ssh_agent
     ];
 
     shellInit = ''
-      # NIX
-      # usually in /etc/<shell>rc but nix install didn't update fish, so I keep it here
-
-      # bass . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-
-      # Lame fix: for some reason NIX_SSL_CERT_FILE is set before we reach this
-      # so the "only run once" guard in the hm script prevents the right value to
-      # be setup. Let's get rid of it
-      # set -e __HM_SESS_VARS_SOURCED
-      # bass . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-
       # helix and nvim wants that path to exist and be writable
       mkdir -p "$XDG_RUNTIME_DIR"
+
+      # Make sure it's there and not in $fish_user_paths otherwise it messes up with
+      # nix develop
+      fish_add_path --prepend --path "/nix/var/nix/profiles/default/bin"
+      fish_add_path --prepend --path "$HOME/.nix-profile/bin"
+
+      fish_add_path --prepend --path "/usr/local/bin"
+      fish_add_path --prepend --path "$HOME/.local/bin"
+      fish_add_path --prepend --path "$HOME/.cargo/bin"
+      fish_add_path --prepend --path "/opt/homebrew/bin"
     '';
 
     interactiveShellInit = ''
       set -U fish_greeting
 
-      # start ssh-agent
-      # fish_ssh_agent
-
       set -x LC_ALL en_US.UTF-8
       set -x LANG en_US.UTF-8
 
-      # fish_add_path $HOME/.cargo/bin
-      # fish_add_path $HOME/.local/bin
-      # fish_add_path /usr/local/bin # for code
-
-      # eval (/opt/homebrew/bin/brew shellenv)
-
       # aws completion
-      set -gx PATH $PATH ${pkgs.awscli2}/bin/aws_completer
-      complete -c aws -a "(env AWS_PROFILE=default aws_completer)"
+      complete -c aws -a "(env AWS_PROFILE=default ${pkgs.awscli2}/bin/aws_completer)"
 
       # jujutsu completion
       jj util completion fish | source
+
+      # so that nix-shell stays in fish instead of bash
+      # Note that the --info-right doesn't show because I'm using starship
+      any-nix-shell fish --info-right | source
     '';
 
     shellAliases = {
@@ -66,26 +58,18 @@
         body = "command rm -i $argv";
         description = "safe rm";
       };
-      # TODO: install slap via nix
-      python_stuff = {
-        # source (pyenv init --path | psub)
-        body = ''
-          ${pkgs.pyenv}/bin/pyenv init - | source
-          command -v slap &>/dev/null; and source (env SLAP_SHADOW=true slap venv -i fish | psub)
-        '';
-        description = "setup some python/slap state";
-      };
       # file explorer
-      yy = {
-        body = ''
-          set tmp (mktemp -t "yazi-cwd.XXXXX")
-          ${pkgs.yazi}/bin/yazi $argv --cwd-file="$tmp"
-          if set cwd (cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-              cd -- "$cwd"
-          end
-          rm -f -- "$tmp"
-        '';
-      };
+      # TODO: check out yazi in home-manager. Seems like it provides this in its fish integration
+      # yy = {
+      #   body = ''
+      #     set tmp (mktemp -t "yazi-cwd.XXXXX")
+      #     ${pkgs.yazi}/bin/yazi $argv --cwd-file="$tmp"
+      #     if set cwd (cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+      #         cd -- "$cwd"
+      #     end
+      #     rm -f -- "$tmp"
+      #   '';
+      # };
       helix-install = {
         body = ''
           set -q XDG_CACHE_HOME || set -U XDG_CACHE_HOME $HOME/.cache

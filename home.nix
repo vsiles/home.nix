@@ -1,4 +1,4 @@
-{ config, pkgs, actualName, username, email, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
     ./terminals
@@ -8,16 +8,25 @@
   ];
 
   config = {
-    home.stateVersion = "24.05";
+    home.stateVersion = "25.05";
 
     fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
+      # keep nix in sync with nixpkgs. See nix.package in system.nix
+      config.nix.package
       # Fonts & helpers
-      (nerdfonts.override {
-        fonts = [ "UbuntuMono" "JetBrainsMono" "NerdFontsSymbolsOnly" "ProggyClean" ];
-      })
-      bashInteractive # make sure we at least have modern bash
+      # stable/old syntax is
+      # (nerdfonts.override {
+      #   fonts = [ "UbuntuMono" "JetBrainsMono" "NerdFontsSymbolsOnly" "ProggyClean" ];
+      # })
+      # Names can be found here https://github.com/NixOS/nixpkgs/blob/master/pkgs/data/fonts/nerd-fonts/manifests/fonts.json
+      nerd-fonts.ubuntu-mono
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.symbols-only
+      nerd-fonts.proggy-clean-tt
+      # make sure we at least have modern bash
+      bashInteractive
     ];
 
     # XDG setup

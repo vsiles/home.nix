@@ -125,7 +125,7 @@ in
 
     {
       name = "toml";
-      auto-format = false;
+      auto-format = true;
       inherit indent;
     }
   ];

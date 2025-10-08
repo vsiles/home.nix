@@ -14,7 +14,6 @@
     };
     options = "--delete-older-than 10d";
   };
-  nix.settings.auto-optimise-store = true;
 
   users.users.${username} = {
     name = username;

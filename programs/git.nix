@@ -12,6 +12,7 @@
     userName = actualName;
     userEmail = email;
     lfs.enable = true;
+    ignores = [ ".jj" "result" ".direnv" ];
     extraConfig = {
       init.defaultBranch = "develop";
       merge = {
