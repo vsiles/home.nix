@@ -10,13 +10,13 @@ let
     nixfmt-rfc-style
     any-nix-shell
   ];
-  ];
   # The ones I can't live without
   mandatoryPkgs = with pkgs; [
     coreutils
     curl
     jq
     fd
+    neovim
     ripgrep
     tree
     wget

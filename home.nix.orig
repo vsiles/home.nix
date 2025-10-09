@@ -1,0 +1,20 @@
+{ config, pkgs, ... }:
+
+{
+  home.username = "vsiles";
+  home.homeDirectory = "/home/vsiles";
+
+  home.stateVersion = "25.05";
+
+  home.packages = [
+	pkgs.helix
+	pkgs.git
+	pkgs.jujutsu
+  ];
+
+  home.sessionVariables = {
+    EDITOR = "hx";
+  };
+
+  programs.home-manager.enable = true;
+}

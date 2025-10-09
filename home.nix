@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./terminals
     ./editors
     ./programs
     ./shells
@@ -9,12 +8,11 @@
 
   config = {
     home.stateVersion = "25.05";
+    programs.home-manager.enable = true;
 
     fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
-      # keep nix in sync with nixpkgs. See nix.package in system.nix
-      config.nix.package
       # Fonts & helpers
       # stable/old syntax is
       # (nerdfonts.override {
