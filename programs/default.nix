@@ -43,6 +43,9 @@ let
     # gitui
     marksman
     topgrade
+    # claude
+    claude-code
+    nodejs_24
   ];
   nvimPkgs = with pkgs; [
     # nvim related things. TODO: clean-up
